@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avacado.AI - Transform Lyrics into Melodies</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .cartoon-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .cartoon-card {
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.25);
+            border: 3px solid #4338ca;
+            background: linear-gradient(135deg, #3730a3 0%, #312e81 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cartoon-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(67, 56, 202, 0) 100%);
+            pointer-events: none;
+        }
+        
+        .brand-title {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(to right, #22c55e, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-family: 'Permanent Marker', cursive;
+            background: linear-gradient(to right, #f59e0b, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .glow-button {
+            background: linear-gradient(45deg, #06b6d4, #0ea5e9);
+            border: none;
+            box-shadow: 0 0 15px #06b6d4;
+            transition: all 0.3s ease;
+        }
+        
+        .glow-button:hover {
+            box-shadow: 0 0 25px #0ea5e9;
+            transform: translateY(-2px);
+        }
+        
+        .feature-card {
+            background: rgba(30, 41, 59, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid #22c55e;
+        }
+        
+        .character-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .music-wave {
+            position: relative;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .music-wave span {
+            width: 4px;
+            height: 20px;
+            margin: 0 2px;
+            background-color: #22c55e;
+            border-radius: 4px;
+            animation: wave 1.2s infinite ease-in-out;
+        }
+        
+        .music-wave span:nth-child(2) { animation-delay: 0.1s; }
+        .music-wave span:nth-child(3) { animation-delay: 0.2s; }
+        .music-wave span:nth-child(4) { animation-delay: 0.3s; }
+        .music-wave span:nth-child(5) { animation-delay: 0.4s; }
+        .music-wave span:nth-child(6) { animation-delay: 0.5s; }
+        
+        @keyframes wave {
+            0%, 40%, 100% { transform: scaleY(0.4); }
+            20% { transform: scaleY(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="p-4 cartoon-bg sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="music-wave mr-2">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <a href="#" class="text-2xl md:text-3xl font-bold brand-title">Avacado.AI</a>
+            </div>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#features" class="hover:text-green-400 transition">Features</a>
+                <a href="#how-it-works" class="hover:text-green-400 transition">How It Works</a>
+                <a href="#demo" class="hover:text-green-400 transition">Demo</a>
+                <a href="#team" class="hover:text-green-400 transition">Team</a>
+            </div>
+            
+            <div>
+                <button class="glow-button px-6 py-2 rounded-full font-bold">Try Now</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 cartoon-bg relative overflow-hidden">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0 z-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    Transform your lyrics into melodies
+                </h1>
+                <p class="text-xl md:text-2xl tagline mb-8">
+                    One verse at a time
+                </p>
+                <p class="text-gray-300 mb-8 max-w-lg">
+                    Avacado.AI uses cutting-edge AI technology to turn your written lyrics into 
+                    professionally composed music. No musical expertise required.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="glow-button px-8 py-3 rounded-full font-bold text-lg">
+                        <i class="fas fa-music mr-2"></i> Create Music
+                    </button>
+                    <button class="border-2 border-blue-500 px-8 py-3 rounded-full font-bold text-lg hover:bg-blue-500 hover:bg-opacity-20 transition">
+                        <i class="fas fa-play mr-2"></i> Watch Demo
+                    </button>
+                </div>
+            </div>
+            
+            <div class="md:w-1/2 relative">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-20"></div>
+                <div class="absolute bottom-20 left-20 w-64 h-64 bg-blue-600 rounded-full filter blur-3xl opacity-20"></div>
+                
+                <!-- The ape character image (positioned and styled) -->
+                <img src="images\img1.png" alt="Cartoon Ape Character" class="character-float relative z-10 mx-auto">
+            </div>
+        </div>
+        
+        <!-- Decorative wave at bottom -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#1e293b" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,213.3C672,224,768,224,864,202.7C960,181,1056,139,1152,133.3C1248,128,1344,160,1392,176L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="brand-title">Features</span> That Make Us Unique
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card p-6">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">AI-Powered Lyrics-to-Melody</h3>
+                    <p class="text-gray-400">Transform your written lyrics into catchy melodies with our DiffRhythm technology.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card p-6">
+                    <div class="text-green-400 text-4xl mb-4">
+                        <i class="fas fa-guitar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Customizable Instruments</h3>
+                    <p class="text-gray-400">Choose from a variety of instruments to create your unique composition.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card p-6">
+                    <div class="text-yellow-400 text-4xl mb-4">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Cloud-Based Storage & Sharing</h3>
+                    <p class="text-gray-400">Store and share your compositions easily with cloud-based technology.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card p-6">
+                    <div class="text-red-400 text-4xl mb-4">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Multilingual Support</h3>
+                    <p class="text-gray-400">Create music from lyrics in multiple languages, including Indian languages.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card p-6">
+                    <div class="text-purple-400 text-4xl mb-4">
+                        <i class="fas fa-share-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Social Media Integration</h3>
+                    <p class="text-gray-400">Share your music directly to your favorite social media platforms.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card p-6">
+                    <div class="text-indigo-400 text-4xl mb-4">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Real-Time Generation</h3>
+                    <p class="text-gray-400">Generate high-quality music in real-time with our powerful GPU backend.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 cartoon-bg relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="brand-title">How It Works</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-12 md:space-y-0">
+                <!-- Step 1 -->
+                <div class="md:w-1/3 text-center px-6">
+                    <div class="h-16 w-16 rounded-full bg-green-500 mx-auto flex items-center justify-center text-2xl font-bold mb-6">1</div>
+                    <h3 class="text-xl font-bold mb-3">Input Your Lyrics</h3>
+                    <p class="text-gray-300">Enter your song lyrics or use our AI-powered lyrics generator for inspiration.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="md:w-1/3 text-center px-6">
+                    <div class="h-16 w-16 rounded-full bg-blue-500 mx-auto flex items-center justify-center text-2xl font-bold mb-6">2</div>
+                    <h3 class="text-xl font-bold mb-3">AI Music Generation</h3>
+                    <p class="text-gray-300">Our DiffRhythm AI model processes your lyrics and converts them into melodies.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="md:w-1/3 text-center px-6">
+                    <div class="h-16 w-16 rounded-full bg-purple-500 mx-auto flex items-center justify-center text-2xl font-bold mb-6">3</div>
+                    <h3 class="text-xl font-bold mb-3">Enjoy & Share</h3>
+                    <p class="text-gray-300">Listen to your creation, customize it if needed, then save and share with the world.</p>
+                </div>
+            </div>
+            
+            <!-- Characters display -->
+            <div class="flex justify-center mt-20 space-x-8">
+                <!-- Rapper character -->
+                <div class="character-float">
+                    <img src="images\img2.png" alt="Rapper Character" class="h-64">
+                </div>
+                
+                <!-- DJ character -->
+                <div class="character-float" style="animation-delay: 1s;">
+                    <img src="images\img3.png" alt="DJ Character" class="h-64">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="brand-title">Try Our Demo</span>
+            </h2>
+            
+            <div class="cartoon-card p-8 max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Enter Your Lyrics</h3>
+                        <textarea 
+                            class="w-full h-64 p-4 rounded-lg bg-gray-800 text-white border border-blue-500 focus:border-green-500 focus:ring focus:ring-green-500 focus:ring-opacity-50"
+                            placeholder="Type your lyrics here or click 'Generate Lyrics' for AI-generated lyrics..."
+                        ></textarea>
+                        <button class="mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition">
+                            <i class="fas fa-magic mr-2"></i> Generate Lyrics
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Music Settings</h3>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-300 mb-2">Genre</label>
+                            <select class="w-full p-3 rounded-lg bg-gray-800 text-white border border-blue-500">
+                                <option>Pop</option>
+                                <option>Hip Hop</option>
+                                <option>Rock</option>
+                                <option>EDM</option>
+                                <option>Jazz</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-300 mb-2">Tempo</label>
+                            <input type="range" min="60" max="180" value="120" class="w-full">
+                            <div class="flex justify-between text-gray-400 text-sm">
+                                <span>Slow</span>
+                                <span>120 BPM</span>
+                                <span>Fast</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="block text-gray-300 mb-2">Mood</label>
+                            <div class="flex space-x-2">
+                                <button class="px-4 py-2 bg-blue-500 bg-opacity-30 rounded-lg hover:bg-opacity-50 transition">Happy</button>
+                                <button class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition">Sad</button>
+                                <button class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition">Energetic</button>
+                                <button class="px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition">Chill</button>
+                            </div>
+                        </div>
+                        
+                        <button class="glow-button w-full py-3 rounded-lg text-lg font-bold mt-8">
+                            <i class="fas fa-music mr-2"></i> Generate Music
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Audio Player Preview (Disabled in Demo) -->
+                <div class="mt-8 p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <div class="flex items-center">
+                        <button class="p-3 bg-green-500 rounded-full mr-4">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        
+                        <div class="flex-1">
+                            <div class="h-2 bg-gray-700 rounded-full relative">
+                                <div class="h-full w-1/3 bg-gradient-to-r from-green-500 to-blue-500 rounded-full"></div>
+                                <div class="absolute -top-1 left-1/3 h-4 w-4 bg-white rounded-full"></div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400 mt-1">
+                                <span>0:42</span>
+                                <span>2:18</span>
+                            </div>
+                        </div>
+                        
+                        <button class="p-2 text-gray-400 hover:text-white ml-4">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        
+                        <button class="p-2 text-gray-400 hover:text-white ml-2">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="py-20 cartoon-bg">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="brand-title">Our Tech Stack</span>
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fab fa-react text-4xl text-blue-400 mb-3"></i>
+                    <h3 class="font-bold">React & Next.js</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fab fa-python text-4xl text-yellow-400 mb-3"></i>
+                    <h3 class="font-bold">Python & FastAPI</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fas fa-database text-4xl text-green-400 mb-3"></i>
+                    <h3 class="font-bold">PostgreSQL</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fas fa-cloud text-4xl text-blue-400 mb-3"></i>
+                    <h3 class="font-bold">AWS S3</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fab fa-docker text-4xl text-blue-500 mb-3"></i>
+                    <h3 class="font-bold">Docker</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fab fa-github text-4xl text-gray-300 mb-3"></i>
+                    <h3 class="font-bold">GitHub Actions</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fas fa-brain text-4xl text-purple-400 mb-3"></i>
+                    <h3 class="font-bold">DiffRhythm AI</h3>
+                </div>
+                
+                <div class="p-4 bg-gray-800 bg-opacity-50 rounded-lg">
+                    <i class="fas fa-bolt text-4xl text-yellow-400 mb-3"></i>
+                    <h3 class="font-bold">GPU Acceleration</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">
+                <span class="brand-title">Meet Our Team</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="text-center">
+                    <div class="h-32 w-32 bg-gradient-to-br from-blue-500 to-green-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Member 1</h3>
+                    <p class="text-gray-400">IT, AVCOE</p>
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="text-center">
+                    <div class="h-32 w-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Member 2</h3>
+                    <p class="text-gray-400">CSE, AVCOE</p>
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="text-center">
+                    <div class="h-32 w-32 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Member 3</h3>
+                    <p class="text-gray-400">AIML, AVCOE</p>
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="text-center">
+                    <div class="h-32 w-32 bg-gradient-to-br from-green-500 to-teal-500 rounded-full mx-auto mb-4 flex items-center justify-center text-4xl">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3 class="text-xl font-bold">Member 4</h3>
+                    <p class="text-gray-400">IT, AVCOE</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 cartoon-bg">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Create Your Own Music?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Turn your lyrics into amazing melodies with Avacado.AI's cutting-edge technology. No musical expertise required!
+            </p>
+            <button class="glow-button px-10 py-4 rounded-full text-xl font-bold">
+                Get Started Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold brand-title">Avacado.AI</a>
+                    <p class="text-gray-400 mt-2">Transforming lyrics into melodies, one verse at a time.</p>
+                </div>
+                
+                <div class="flex space-x-8 mb-6 md:mb-0">
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-twitter text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-instagram text-2xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <hr class="border-gray-800 my-8">
+            
+            <div class="text-center text-gray-500 text-sm">
+                &copy; 2025 Avacado.AI. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple script to handle demo functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update BPM value when slider changes
+            const tempoSlider = document.querySelector('input[type="range"]');
+            const bpmDisplay = document.querySelector('div.flex.justify-between span:nth-child(2)');
+            
+            if (tempoSlider && bpmDisplay) {
+                tempoSlider.addEventListener('input', function() {
+                    bpmDisplay.textContent = this.value + ' BPM';
+                });
+            }
+            
+            // Mood button selection
+            const moodButtons = document.querySelectorAll('button[class*="px-4 py-2"]');
+            
+            if (moodButtons) {
+                moodButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        // Reset all buttons
+                        moodButtons.forEach(btn => {
+                            btn.classList.remove('bg-blue-500', 'bg-opacity-30');
+                            btn.classList.add('bg-gray-700');
+                        });
+                        
+                        // Highlight selected button
+                        this.classList.remove('bg-gray-700');
+                        this.classList.add('bg-blue-500', 'bg-opacity-30');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
